@@ -7,6 +7,10 @@
         <variable
             name="taskEntry"
             type="com.example.santanderdioproject.database.TaskEntry" />
+        
+        <variable
+            name="clickListener"
+            type="com.example.santanderdioproject.ui.task.TaskClickListener" />
 
     </data>
 
@@ -15,7 +19,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
         app:cardCornerRadius="8dp"
-        app:cardElevation="4dp">
+        app:cardElevation="4dp"
+        android:onClick="@{()-> clickListener.onClick(taskEntry)}">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/row_background"

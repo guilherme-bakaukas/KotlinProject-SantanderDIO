@@ -1,60 +1,58 @@
 package com.example.santanderdioproject.ui.update
 
 import android.os.Bundle
+import android.text.TextUtils
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.santanderdioproject.R
+import com.example.santanderdioproject.database.TaskEntry
+import com.example.santanderdioproject.databinding.FragmentUpdateBinding
+import com.example.santanderdioproject.viewmodel.TaskViewModel
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [UpdateFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class UpdateFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private val viewModel: TaskViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        val binding = FragmentUpdateBinding.inflate(inflater)
+
+        val args = UpdateFragmentArgs.fromBundle(requireArguments())
+
+        binding.apply {
+            updateEditTask.setText(args.taskEntry.title)
+            updateSpinner.setSelection(args.taskEntry.priority)
+            btnUpdate.setOnClickListener {
+                if (TextUtils.isEmpty(updateEditTask.text)){
+                    Toast.makeText(requireContext(), "It's empty!", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+
+                val task_str = updateEditTask.text
+                val priority = updateSpinner.selectedItemPosition
+
+                val taskEntry = TaskEntry(
+                    args.taskEntry.id,
+                    task_str.toString(),
+                    priority,
+                    args.taskEntry.timestamp
+                )
+
+                viewModel.update(taskEntry)
+                Toast.makeText(requireContext(), "Updated!", Toast.LENGTH_SHORT).show()
+                findNavController().navigate(R.id.action_updateFragment_to_taskFragment)
+        }
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_update, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment UpdateFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            UpdateFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
     }
 }
