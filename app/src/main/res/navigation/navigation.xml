@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/taskFragment"
         android:name="com.example.santanderdioproject.ui.task.TaskFragment"
-        android:label="fragment_task"
+        android:label="Kotlin MVVM ToDo List"
         tools:layout="@layout/fragment_task" >
         <action
             android:id="@+id/action_taskFragment_to_addFragment"
@@ -28,24 +28,26 @@
     <fragment
         android:id="@+id/addFragment"
         android:name="com.example.santanderdioproject.ui.add.AddFragment"
-        android:label="fragment_add"
+        android:label="Add"
         tools:layout="@layout/fragment_add" >
         <action
             android:id="@+id/action_addFragment_to_taskFragment"
             app:destination="@id/taskFragment"
             app:enterAnim="@anim/from_left"
-            app:exitAnim="@anim/to_right" />
+            app:exitAnim="@anim/to_right"
+            app:popUpTo="@id/taskFragment" />
     </fragment>
     <fragment
         android:id="@+id/updateFragment"
         android:name="com.example.santanderdioproject.ui.update.UpdateFragment"
-        android:label="fragment_update"
+        android:label="Update"
         tools:layout="@layout/fragment_update" >
         <action
             android:id="@+id/action_updateFragment_to_taskFragment"
             app:destination="@id/taskFragment"
             app:enterAnim="@anim/from_right"
             app:exitAnim="@anim/to_left"
+            app:popUpTo="@id/taskFragment"
             app:popUpToInclusive="true" />
         <argument
             android:name="taskEntry"
