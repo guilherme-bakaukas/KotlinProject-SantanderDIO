@@ -1,9 +1,15 @@
 package com.example.santanderdioproject.ui.task
 
+
 import android.app.AlertDialog
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
+
+import android.content.ContentValues.TAG
+import android.util.Log
+import android.widget.Toast
+
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -42,6 +48,7 @@ class TaskFragment : Fragment() {
             binding.recyclerView.adapter = adapter
 
             floatingActionButton.setOnClickListener {
+                Log.d(TAG, "Clickado!")
                 findNavController().navigate(R.id.action_taskFragment_to_addFragment)
             }
         }
